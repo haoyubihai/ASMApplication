@@ -1,0 +1,25 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+
+# Project exclude paths
+/live-trace-plugin/build/classes/java/main/
+/live-trace-plugin/build/tmp/
+/live-transform-trace-time/build/classes/
+/live-transform-trace-time/build/classes/java/main/
+/live-transform-trace-time/build/kotlin/
+/live-transform-trace-time/build/libs/
+/live-transform-trace-time/build/reports/
+/live-transform-trace-time/build/test-results/
+/live-transform-trace-time/build/tmp/

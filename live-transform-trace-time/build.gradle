@@ -1,0 +1,29 @@
+apply from:'../commonConfig.gradle'
+apply plugin: 'maven'
+dependencies {
+//    kapt "com.google.auto.service:auto-service:1.0-rc6"
+    api asm.api
+    api asm.analysis
+    api asm.commons
+    api asm.tree
+    api asm.util
+    compileOnly project_plugin.gradle_plugin
+    compileOnly gradleApi()
+}
+
+group="com.jrhlive"
+version ="1.0.6"
+//
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            println("##################开始构建本地jar")
+            repository(url: uri('../local-repo')) //定义本地maven仓库的地址
+        }
+    }
+}
+
+
+
+// asmTest.dependsOn(uploadArchives)
+

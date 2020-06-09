@@ -1,0 +1,47 @@
+
+def versions = [
+        gradle_plugin    : '3.6.3',
+        kotlin_version   : '1.3.72',
+        booster_version  : '1.6.0',
+        buildprops       : '1.0.0',
+        relinker_version : '1.4.1',
+        asm_version      : '8.0.1',
+]
+
+ext {
+
+
+//    debug = gradle.startParameter.taskNames.any { it.contains('debug') || it.contains('Debug') }
+
+    project_plugin = [
+            gradle_plugin           : "com.android.tools.build:gradle:${versions.gradle_plugin}",
+            kotlin_plugin           : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin_version}",
+            booster_plugin          : "com.didiglobal.booster:booster-gradle-plugin:${versions.booster_version}",
+            buildprops_gradle_plugin: "io.johnsonlee.buildprops:buildprops-gradle-plugin:${versions.buildprops}"
+    ]
+
+    booster = [
+            api               : "com.didiglobal.booster:booster-api:${versions.booster_version}",
+            transform_api     : "com.didiglobal.booster:booster-transform-asm:${versions.booster_version}",
+            android_api       : "com.didiglobal.booster:booster-android-api:${versions.booster_version}",
+            android_instrument: "com.didiglobal.booster:booster-android-instrument:${versions.booster_version}",
+
+    ]
+
+    kotlin = [
+            stdlib : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin_version}",
+            reflect: "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin_version}"
+
+
+    ]
+
+    asm = [
+            api     : "org.ow2.asm:asm:${versions.asm_version}",
+            analysis: "org.ow2.asm:asm-analysis:${versions.asm_version}",
+            commons : "org.ow2.asm:asm-commons:${versions.asm_version}",
+            tree    : "org.ow2.asm:asm-tree:${versions.asm_version}",
+            util    : "org.ow2.asm:asm-util:${versions.asm_version}"
+    ]
+
+
+}

@@ -1,0 +1,59 @@
+apply plugin: 'maven'
+
+def getPropertyFromLocalProperties(key) {
+    File file = project.rootProject.file('local.properties')
+    if (file.exists()) {
+        Properties properties = new Properties()
+        properties.load(file.newDataInputStream())
+        return properties.getProperty(key)
+    }
+}
+
+
+def hasAndroidPlugin() {
+    return getPlugins().inject(false) { a, b ->
+        def classStr = b.getClass().name
+        def isAndroid = ("com.android.build.gradle.LibraryPlugin" == classStr) || ("com.android.build.gradle.AppPlugin" == classStr)
+        a || isAndroid
+    }
+}
+
+def isReleaseBuild() {
+    return VERSION_NAME.contains("SNAPSHOT") == false
+}
+
+def getRepositoryUrl() {
+    return isReleaseBuild() ? getPropertyFromLocalProperties("RELEASE_REPOSITORY_URL") : getPropertyFromLocalProperties("SNAPSHOT_REPOSITORY_URL")
+}
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            println "after"
+            mavenDeployer {
+                pom.groupId = GROUP
+                pom.artifactId = POM_ARTIFACT_ID
+                pom.version = VERSION_NAME
+//                repository(url: getRepositoryUrl()) {
+////                    authentication(userName: getPropertyFromLocalProperties("NEXUS_USERNAME"), password: getPropertyFromLocalProperties("NEXUS_PASSWORD"))
+////                }
+                repositories (url : uri('../local-repo'))
+
+            }
+        }
+    }
+
+    task androidSourcesJar(type: Jar) {
+        if (hasAndroidPlugin()) {
+            from android.sourceSets.main.java.srcDirs
+            classifier = 'sources'
+        } else {
+            from sourceSets.main.allSource
+            classifier = 'sources'
+        }
+    }
+
+    artifacts {
+        archives androidSourcesJar
+    }
+}
