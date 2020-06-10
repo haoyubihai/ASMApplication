@@ -2,8 +2,6 @@ package com.jrhlive.asmapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
-import com.jrhlive.library.TimeCost
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -13,13 +11,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        test(0)
+        doAction()
         Thread.sleep(Random.nextLong(2000))
-
-        System.nanoTime()
     }
 
-    fun test(size:Int){
+    fun doAction(){
         Thread.sleep(Random.nextLong(3000L))
     }
 }

@@ -75,6 +75,7 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisito
         interfaces: Array<out String>?
     ) {
         super.visit(version, access, name, signature, superName, interfaces)
+
         mClassName = name
 
     }

@@ -5,11 +5,16 @@ import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 import com.jrhlive.transform.trace.time.TraceTimeClassVisitor
 import org.apache.commons.codec.digest.DigestUtils
+import org.gradle.api.Project
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 
 class TraceTransform extends Transform{
+    Project project
 
+    TraceTransform(Project project) {
+        this.project = project
+    }
 
     @Override
     String getName() {
@@ -48,33 +53,37 @@ class TraceTransform extends Transform{
 
     @Override
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
-        super.transform(transformInvocation)
-        transformInvocation.inputs.each {
-            it.directoryInputs.each {
-                if(it.file.isDirectory()){
-                    it.file.eachFileRecurse {
-                        def fileName=it.name
-                        if(fileName.endsWith(".class")&&!fileName.startsWith("R\$")
-                                && fileName != "BuildConfig.class"&&fileName!="R.class"){
-                            //各种过滤类，关联classVisitor
-                            handleFile(it)
+//        super.transform(transformInvocation)
+
+//        println("project.traceTime--${project.traceTime.enabled}")
+//        if (project.traceTime!=null&&project.traceTime.enabled){
+            transformInvocation.inputs.each {
+                it.directoryInputs.each {
+                    if(it.file.isDirectory()){
+                        it.file.eachFileRecurse {
+                            def fileName=it.name
+                            if(fileName.endsWith(".class")&&!fileName.startsWith("R\$")
+                                    && fileName != "BuildConfig.class"&&fileName!="R.class"&&!fileName.contains("TimeCost")){
+                                //各种过滤类，关联classVisitor
+                                handleFile(it)
+                            }
                         }
                     }
+                    def dest=transformInvocation.outputProvider.getContentLocation(it.name,it.contentTypes,it.scopes, Format.DIRECTORY)
+                    FileUtils.copyDirectory(it.file,dest)
                 }
-                def dest=transformInvocation.outputProvider.getContentLocation(it.name,it.contentTypes,it.scopes, Format.DIRECTORY)
-                FileUtils.copyDirectory(it.file,dest)
-            }
-            it.jarInputs.each { jarInput->
-                def jarName = jarInput.name
-                def md5Name = DigestUtils.md5Hex(jarInput.file.getAbsolutePath())
-                if (jarName.endsWith(".jar")) {
-                    jarName = jarName.substring(0, jarName.length() - 4)
+                it.jarInputs.each { jarInput->
+                    def jarName = jarInput.name
+                    def md5Name = DigestUtils.md5Hex(jarInput.file.getAbsolutePath())
+                    if (jarName.endsWith(".jar")) {
+                        jarName = jarName.substring(0, jarName.length() - 4)
+                    }
+                    def dest = transformInvocation.outputProvider.getContentLocation(jarName + md5Name,
+                            jarInput.contentTypes, jarInput.scopes, Format.JAR)
+                    FileUtils.copyFile(jarInput.file, dest)
                 }
-                def dest = transformInvocation.outputProvider.getContentLocation(jarName + md5Name,
-                        jarInput.contentTypes, jarInput.scopes, Format.JAR)
-                FileUtils.copyFile(jarInput.file, dest)
             }
-        }
+//        }
     }
 
     private void handleFile(File file){

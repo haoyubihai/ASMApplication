@@ -32,4 +32,4 @@ task asmTest(type:Exec,group:"asm"){
     commandLine './asm.sh'
 }
 
-asmTest.mustRunAfter(uploadArchives)
+asmTest.dependsOn(uploadArchives)

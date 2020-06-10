@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'live.trace.plugin'
+
 //apply plugin: 'kotlin-kapt'
 //定义 Gradle 插件中 properties 的文件名
 //apply plugin: 'com.jrhlive.plugin'
@@ -34,8 +34,8 @@ android {
         targetCompatibility 1.8
     }
 
-
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -50,8 +50,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(path: ':live-library')
 
-
-//    kapt "com.google.auto.service:auto-service:1.0-rc6"
-//    api "com.didiglobal.booster:booster-api:$booster_version"
-//    api "com.didiglobal.booster:booster-transform-asm:$booster_version"
 }
+
+if (isTraceTimePluginEnabled.toBoolean()){
+    apply plugin: 'live.trace.plugin'
+}
+
