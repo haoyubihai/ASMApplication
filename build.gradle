@@ -24,6 +24,7 @@ buildscript {
 //        classpath project_plugin.booster_plugin
         classpath project_plugin.buildprops_gradle_plugin
         classpath 'com.jrhlive.plugin:live-trace-plugin:1.0.9'
+        classpath 'com.jrhlive.plugin:live-trace-user-plugin:1.0.0'
 
     }
 }

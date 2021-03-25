@@ -11,8 +11,6 @@ sourceSets {
             srcDirs += ['src/main/kotlin', 'src/main/java']
         }
 
-
-
     }
     test {
         java {

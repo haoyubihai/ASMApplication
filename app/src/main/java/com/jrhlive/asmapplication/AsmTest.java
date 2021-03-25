@@ -23,5 +23,11 @@ class AsmTest {
         }
         long endTime = System.currentTimeMillis();
         System.out.println("花费时间="+(endTime-startTime));
+
+        action("jack",18);
+    }
+
+    public void action(String name ,int age){
+        System.out.println("name="+name+"age="+age);
     }
 }
