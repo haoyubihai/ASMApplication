@@ -4,6 +4,7 @@ buildscript {
     apply from: 'dependencies.gradle'
     ext {
         kotlin_version = '1.3.72'
+        live_trace_time_version='0.0.2'
     }
     repositories {
 
@@ -23,7 +24,7 @@ buildscript {
         classpath project_plugin.gradle_plugin
 //        classpath project_plugin.booster_plugin
         classpath project_plugin.buildprops_gradle_plugin
-        classpath 'com.jrhlive.plugin:live-trace-plugin:1.0.9'
+        classpath "com.jrhlive.plugin:live-trace-plugin:$live_trace_time_version"
 
     }
 }

@@ -4,12 +4,15 @@ apply plugin: 'io.johnsonlee.buildprops'
 apply from:'../dependencies.gradle'
 sourceSets {
     main {
+
         java {
             srcDirs += []
         }
         kotlin {
             srcDirs += ['src/main/kotlin', 'src/main/java']
         }
+
+
 
 
 
@@ -31,6 +34,9 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 }
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 dependencies {
     implementation kotlin.stdlib

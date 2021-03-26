@@ -15,7 +15,14 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(Random.nextLong(2000))
     }
 
+    @TestMethodAnnotation(desc = "doActionAnnotation")
     fun doAction(){
         Thread.sleep(Random.nextLong(3000L))
+        doActionTips("hello ",30)
+    }
+
+    fun doActionTips( name:String ,age :Int){
+        println("name=$name--age=$age")
     }
 }
+

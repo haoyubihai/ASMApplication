@@ -52,7 +52,7 @@ dependencies {
 
 }
 
-if (isTraceTimePluginEnabled.toBoolean()){
+//if (isTraceTimePluginEnabled.toBoolean()){
     apply plugin: 'live.trace.plugin'
-}
+//}
 

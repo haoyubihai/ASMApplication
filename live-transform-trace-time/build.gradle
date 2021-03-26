@@ -11,8 +11,9 @@ dependencies {
     compileOnly gradleApi()
 }
 
+
 group="com.jrhlive"
-version ="1.0.6"
+version = "$live_trace_time_version"
 //
 uploadArchives {
     repositories {

@@ -1,10 +1,10 @@
 package com.jrhlive.transform.trace.time
 
+import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
-import org.objectweb.asm.Opcodes.ASM5
-import org.objectweb.asm.Opcodes.ASM8
+import org.objectweb.asm.Opcodes.*
 import java.util.logging.Logger
 
 /**
@@ -17,7 +17,7 @@ import java.util.logging.Logger
  ***************************************
  */
 
-class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisitor(ASM8,classVisitor),
+class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisitor(ASM7,classVisitor),
     Opcodes {
     private var mClassName: String? = null
     /**
@@ -78,5 +78,12 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisito
 
         mClassName = name
 
+    }
+
+    override fun visitAnnotation(descriptor: String?, visible: Boolean): AnnotationVisitor {
+
+        println("annotation---descriptor=$descriptor--visible=$visible")
+
+        return super.visitAnnotation(descriptor, visible)
     }
 }

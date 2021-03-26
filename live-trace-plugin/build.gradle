@@ -15,8 +15,10 @@ dependencies {
     implementation 'com.android.tools.build:gradle-api:3.6.3'
 }
 
+
+
 group='com.jrhlive.plugin'
-version='1.0.9'
+version = "$live_trace_time_version"
 
 uploadArchives {
     repositories {

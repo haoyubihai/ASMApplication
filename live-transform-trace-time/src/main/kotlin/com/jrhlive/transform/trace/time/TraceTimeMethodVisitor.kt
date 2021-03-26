@@ -13,7 +13,7 @@ import org.objectweb.asm.Opcodes.*
  * 用途:
  ***************************************
  */
-class TraceTimeMethodVisitor(private val visitor: MethodVisitor?):MethodVisitor(ASM8,visitor),Opcodes {
+class TraceTimeMethodVisitor(private val visitor: MethodVisitor?):MethodVisitor(ASM7,visitor),Opcodes {
     /** Starts the visit of the method's code, if any (i.e. non abstract method).  */
     override fun visitCode() {
         super.visitCode()
