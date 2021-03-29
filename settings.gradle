@@ -1,6 +1,7 @@
+include ':live-library'
 rootProject.name='ASMApplication'
 include ':app'
 include ':live-transform-trace-time'
-
+include ':live-trace-plugin'
 
 
