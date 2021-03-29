@@ -12,6 +12,23 @@ package com.jrhlive.asmapplication
 open class Person {
 
     fun sum() = 5/0.1
+
+    constructor(){
+        println("person----constructor")
+    }
+
+    init {
+        println("person---init")
+    }
 }
 
-class Son:Person()
+class Son:Person{
+
+    constructor(){
+        println("son----constructor")
+    }
+
+    init {
+        println("son--init")
+    }
+}

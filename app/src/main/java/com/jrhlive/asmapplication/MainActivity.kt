@@ -6,13 +6,12 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var line:String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         doAction()
         Thread.sleep(Random.nextLong(2000))
+        doMerge(3,"jack")
     }
 
     @TestMethodAnnotation(desc = "doActionAnnotation")
@@ -23,6 +22,10 @@ class MainActivity : AppCompatActivity() {
 
     fun doActionTips( name:String ,age :Int){
         println("name=$name--age=$age")
+    }
+
+    fun doMerge(num:Int,name:String){
+        println("num=$num------name=$name")
     }
 }
 
