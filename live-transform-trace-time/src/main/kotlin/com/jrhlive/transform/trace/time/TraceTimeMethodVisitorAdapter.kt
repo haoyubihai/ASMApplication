@@ -25,9 +25,6 @@ class TraceTimeMethodVisitorAdapter(private val methodVisitor: MethodVisitor?, p
 
 
         methodVisitor?.run {
-//            visitFieldInsn(org.objectweb.asm.Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
-//            visitLdcInsn("start------")
-//            visitMethodInsn(org.objectweb.asm.Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false)
 
             visitFieldInsn(org.objectweb.asm.Opcodes.GETSTATIC, "com/jrhlive/library/TimeCost", "INSTANCE", "Lcom/jrhlive/library/TimeCost;")
             visitLdcInsn(nameMethod)
@@ -55,26 +52,6 @@ class TraceTimeMethodVisitorAdapter(private val methodVisitor: MethodVisitor?, p
     override fun onMethodExit(opcode: Int) {
         super.onMethodExit(opcode)
         methodVisitor?.run {
-//            visitFieldInsn(org.objectweb.asm.Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
-//            visitLdcInsn("end---------")
-//            visitMethodInsn(org.objectweb.asm.Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false)
-
-//            visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
-//            visitVarInsn(LSTORE, 3)
-//
-//            visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-//            visitTypeInsn(NEW, "java/lang/StringBuilder")
-//            visitInsn(DUP)
-//            visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
-//            visitLdcInsn("\u82b1\u8d39\u65f6\u95f4=");
-//            visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false)
-//
-//            visitVarInsn(LLOAD, 3);
-//            visitVarInsn(LLOAD, 1);
-//            visitInsn(LSUB);
-//            visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(J)Ljava/lang/StringBuilder;", false);
-//            visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false);
-//            visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
 
             visitFieldInsn(org.objectweb.asm.Opcodes.GETSTATIC, "com/jrhlive/library/TimeCost", "INSTANCE", "Lcom/jrhlive/library/TimeCost;")
             visitLdcInsn(nameMethod)
@@ -83,7 +60,7 @@ class TraceTimeMethodVisitorAdapter(private val methodVisitor: MethodVisitor?, p
             visitFieldInsn(org.objectweb.asm.Opcodes.GETSTATIC, "com/jrhlive/library/TimeCost", "INSTANCE", "Lcom/jrhlive/library/TimeCost;")
             visitLdcInsn(nameMethod)
             visitMethodInsn(Opcodes.INVOKEVIRTUAL,"com/jrhlive/library/TimeCost","calTime","(Ljava/lang/String;)V",false)
-//            visitInsn(Opcodes.POP)
+
 
 
         }
@@ -95,6 +72,7 @@ class TraceTimeMethodVisitorAdapter(private val methodVisitor: MethodVisitor?, p
     }
 
     override fun visitAnnotation(descriptor: String?, visible: Boolean): AnnotationVisitor {
+        println("annotation----methodVisitor--descriptor=$descriptor--visible=$visible")
         return super.visitAnnotation(descriptor, visible)
     }
 

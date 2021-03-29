@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jrhlive.plugin</groupId>
   <artifactId>live-trace-plugin</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.5</version>
   <dependencies>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
@@ -20,7 +20,7 @@
     <dependency>
       <groupId>com.jrhlive</groupId>
       <artifactId>live-transform-trace-time</artifactId>
-      <version>0.0.2</version>
+      <version>0.0.5</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>

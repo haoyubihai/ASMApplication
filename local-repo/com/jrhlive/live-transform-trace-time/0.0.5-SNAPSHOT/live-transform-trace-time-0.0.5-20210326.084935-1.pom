@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jrhlive</groupId>
   <artifactId>live-transform-trace-time</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.5-SNAPSHOT</version>
   <dependencies>
     <dependency>
       <groupId>org.ow2.asm</groupId>

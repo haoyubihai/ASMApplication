@@ -82,7 +82,7 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisito
 
     override fun visitAnnotation(descriptor: String?, visible: Boolean): AnnotationVisitor {
 
-        println("annotation---descriptor=$descriptor--visible=$visible")
+        println("annotation-classVisitor--descriptor=$descriptor--visible=$visible")
 
         return super.visitAnnotation(descriptor, visible)
     }
