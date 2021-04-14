@@ -49,12 +49,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation project(path: ':live-library')
+//    implementation project(path: ':live-library')
 }
 
 //if (isTraceTimePluginEnabled.toBoolean()){
     apply plugin: 'live.trace.plugin'
 //}
+
+task asmTestBuildInstall(type:Exec,group:"asm"){
+    workingDir '../'
+    commandLine './asm-test-build-install.sh'
+}
 
 task asmTestBuild(type:Exec,group:"asm"){
     workingDir '../'

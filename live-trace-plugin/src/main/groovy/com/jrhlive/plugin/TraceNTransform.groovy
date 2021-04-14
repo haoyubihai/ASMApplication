@@ -5,6 +5,7 @@ import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 import com.android.utils.Pair
 import com.jrhlive.transform.trace.time.TraceTimeClassVisitor
+import jdk.internal.org.objectweb.asm.tree.ClassNode
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.compress.utils.IOUtils
 import org.gradle.api.Project
@@ -271,9 +272,11 @@ public class TraceNTransform extends Transform{
 
     private byte[] modifyClass(byte[] classBytes) {
         ClassReader classReader = new ClassReader(classBytes);
-        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        ClassVisitor classVisitor = new TraceTimeClassVisitor(classWriter);
-        classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
+        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS)
+        ClassNode classNode = new ClassNode()
+        classReader.accept(classNode,ClassReader.EXPAND_FRAMES)
+        ClassVisitor classVisitor = new TraceTimeClassVisitor(classWriter,classNode)
+        classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
         return classWriter.toByteArray();
     }
 

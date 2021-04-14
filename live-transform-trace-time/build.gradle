@@ -9,6 +9,8 @@ dependencies {
     api asm.util
     compileOnly project_plugin.gradle_plugin
     compileOnly gradleApi()
+    testApi gson
+
 }
 
 

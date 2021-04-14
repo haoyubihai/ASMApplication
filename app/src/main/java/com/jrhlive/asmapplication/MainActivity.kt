@@ -21,11 +21,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun doActionTips( name:String ,age :Int){
-        println("name=$name--age=$age")
     }
 
     fun doMerge(num:Int,name:String){
-        println("num=$num------name=$name")
     }
 }
 

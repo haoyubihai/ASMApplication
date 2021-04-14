@@ -11,4 +11,8 @@ object ProfilingAspect {
 //        methodTagArr.set(methodId, tag);
 //        return methodId;
 //    }
+
+    fun print(name:String,value:Any){
+        println()
+    }
 }
