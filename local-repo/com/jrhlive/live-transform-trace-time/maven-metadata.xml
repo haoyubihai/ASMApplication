@@ -3,15 +3,9 @@
   <groupId>com.jrhlive</groupId>
   <artifactId>live-transform-trace-time</artifactId>
   <versioning>
-    <release>0.0.5</release>
     <versions>
-      <version>1.0.6</version>
-      <version>1.0.7</version>
-      <version>1.0.8</version>
-      <version>0.0.2</version>
-      <version>0.0.5</version>
       <version>0.0.5-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20210414084229</lastUpdated>
+    <lastUpdated>20210414085116</lastUpdated>
   </versioning>
 </metadata>
