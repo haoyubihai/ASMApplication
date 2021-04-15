@@ -69,18 +69,11 @@ class TraceTimeMethodVisitorAdapter2(
     }
 
 
-    private fun createStringBuidler(label: String, valueType: String, localCount: Int) {
+    private fun appendParam(label: String, valueType: String, localCount: Int) {
         println("lable-$label---valueType=$valueType---localCount=$localCount")
-        methodVisitor?.run {
-            visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
-            visitTypeInsn(Opcodes.NEW, "java/lang/StringBuilder")
-            visitInsn(DUP)
-            visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false)
-        }
-
         var variableName =paramNames.getOrNull(localCount-1)
-
-        mv.visitLdcInsn("监控--class=${fullClassName}-----methodName=$nameMethod--$variableName==")
+        //append variableName:
+        mv.visitLdcInsn("$variableName:")
         mv.visitMethodInsn(
             INVOKEVIRTUAL,
             "java/lang/StringBuilder",
@@ -187,10 +180,16 @@ class TraceTimeMethodVisitorAdapter2(
 
             }
         }
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false)
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false)
-
-
+        if (localCount!=parameterTypeCount){
+            mv.visitLdcInsn(",")
+            mv.visitMethodInsn(
+                INVOKEVIRTUAL,
+                "java/lang/StringBuilder",
+                "append",
+                "(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+                false
+            )
+        }
     }
 
     /**
@@ -202,48 +201,81 @@ class TraceTimeMethodVisitorAdapter2(
         if (parameterTypeCount <= 0) return
         // 局部变量
         var localCount = if (isStaticMethod) -1 else 0
+        //先创建一个StringBuilder
+        methodVisitor?.run {
+            visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
+            visitTypeInsn(Opcodes.NEW, "java/lang/StringBuilder")
+            visitInsn(DUP)
+            visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false)
+        }
 
+        //append fullClassName  methodName :{
+        mv.visitLdcInsn("监控--class=${fullClassName}-----methodName=$nameMethod:{ ")
+        mv.visitMethodInsn(
+            INVOKEVIRTUAL,
+            "java/lang/StringBuilder",
+            "append",
+            "(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+            false
+        )
+
+        //append
         for (index in 0 until parameterTypeCount) {
             val type = parameterTypeList[index]
-            println("parameter-type=${type}")
+
             when (type) {
                 "Z" -> {
-                    createStringBuidler("Z", "$type", ++localCount)
+                    appendParam("Z", "$type", ++localCount)
                 }
                 "C" -> {
 
-                    createStringBuidler("C", "$type", ++localCount)
+                    appendParam("C", "$type", ++localCount)
                 }
                 "B" -> {
 
-                    createStringBuidler("B", "$type", ++localCount)
+                    appendParam("B", "$type", ++localCount)
                 }
                 "S" -> {
 
-                    createStringBuidler("S", "$type", ++localCount)
+                    appendParam("S", "$type", ++localCount)
                 }
                 "I" -> {
 
-                    createStringBuidler("I", "$type", ++localCount)
+                    appendParam("I", "$type", ++localCount)
                 }
                 "F" -> {
 
-                    createStringBuidler("F", "$type", ++localCount)
+                    appendParam("F", "$type", ++localCount)
                 }
                 "J" -> {
 
                     localCount++
-                    createStringBuidler("J", "$type", ++localCount)
+                    appendParam("J", "$type", ++localCount)
                 }
                 "D" -> {
 
                     localCount++
-                    createStringBuidler("D", "$type", ++localCount)
+                    appendParam("D", "$type", ++localCount)
                 }
                 else -> {
-                    createStringBuidler("O", "$type", ++localCount)
+                    appendParam("O", "$type", ++localCount)
                 }
             }
         }
+
+        //append "}"
+        mv.visitLdcInsn("} ")
+        mv.visitMethodInsn(
+            INVOKEVIRTUAL,
+            "java/lang/StringBuilder",
+            "append",
+            "(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+            false
+        )
+
+        //toString
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false)
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false)
+
     }
 }
