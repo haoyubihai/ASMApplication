@@ -1,6 +1,9 @@
 package com.jrhlive.transform.trace.time
 
-import org.objectweb.asm.*
+import org.objectweb.asm.Label
+import org.objectweb.asm.MethodVisitor
+import org.objectweb.asm.Opcodes
+import org.objectweb.asm.Type
 import org.objectweb.asm.commons.AdviceAdapter
 import org.objectweb.asm.tree.ClassNode
 import java.util.regex.Pattern
@@ -63,15 +66,70 @@ class TraceTimeMethodVisitorAdapter2(
 
 
     override fun onMethodEnter() {
-        println("life--&&&&&&&&&---onMethodEnter")
+        //增加try catch
+        visitTryCatchBlock(from, to, target, "java/lang/Exception")
+        visitLabel(from)
         probeMethodParameter()
         super.onMethodEnter()
     }
 
+    override fun visitMaxs(maxStack: Int, maxLocals: Int) {
+        //标志：try块结束
+        mv.visitLabel(to)
+//        mv.visitJumpInsn(Opcodes.GOTO, catchEnd)
+        //标志：catch块开始位置
+        mv.visitLabel(target)
+
+//        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, arrayOf("java/lang/Exception"))
+//
+        val local = newLocal(Type.getType("Ljava/lang/Exception;"))
+        mv.visitVarInsn(Opcodes.ASTORE, local)
+
+////         抛出异常
+        mv.visitVarInsn(Opcodes.ALOAD, local)
+
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Exception",
+            "printStackTrace", "()V", false);
+//        mv.visitInsn(Opcodes.ATHROW)
+//        mv.visitLabel(catchEnd)
+        //判断方法的返回类型
+        mv.visitInsn(getReturnCode(descriptor = desc))
+        super.visitMaxs(maxStack, maxLocals)
+
+    }
+
+    /**
+     * 获取对应的返回值
+     */
+    private fun getReturnCode(descriptor: String?): Int {
+        return when (descriptor!!.subSequence(descriptor.indexOf(")") + 1, descriptor.length)) {
+            "V" -> Opcodes.RETURN
+            "I", "Z", "B", "C", "S" -> {
+                mv.visitInsn(Opcodes.ICONST_0)
+                Opcodes.IRETURN
+            }
+            "D" -> {
+                mv.visitInsn(Opcodes.DCONST_0)
+                Opcodes.DRETURN
+            }
+            "J" -> {
+                mv.visitInsn(Opcodes.LCONST_0)
+                Opcodes.LRETURN
+            }
+            "F" -> {
+                mv.visitInsn(Opcodes.FCONST_0)
+                Opcodes.FRETURN
+            }
+            else -> {
+                mv.visitInsn(Opcodes.ACONST_NULL)
+                Opcodes.ARETURN
+            }
+        }
+    }
 
     private fun appendParam(label: String, valueType: String, localCount: Int) {
         println("lable-$label---valueType=$valueType---localCount=$localCount")
-        var variableName =paramNames.getOrNull(localCount-1)
+        val variableName =paramNames.getOrNull(localCount-1)
         //append variableName:
         mv.visitLdcInsn("$variableName:")
         mv.visitMethodInsn(
