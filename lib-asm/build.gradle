@@ -1,0 +1,31 @@
+apply plugin: 'kotlin'
+apply plugin: 'maven'
+def asm_version = "8.0.1"
+def gradle_version = "3.6.3"
+def kotlin_version = "1.4.20"
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compileOnly "com.android.tools.build:gradle:$gradle_version"
+    api gradleApi()
+    api "org.ow2.asm:asm:$asm_version"
+    api "org.ow2.asm:asm-commons:$asm_version"
+    api "org.ow2.asm:asm-analysis:$asm_version"
+    api "org.ow2.asm:asm-util:$asm_version"
+    api "org.ow2.asm:asm-tree:$asm_version"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+group="com.jrhlive"
+version = "$live_trace_time_version"
+//
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            println("##################开始构建本地jar")
+            repository(url: uri('../local-repo')) //定义本地maven仓库的地址
+        }
+    }
+}

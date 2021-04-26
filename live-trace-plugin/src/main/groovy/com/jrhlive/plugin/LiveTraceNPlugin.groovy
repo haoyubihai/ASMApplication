@@ -12,6 +12,9 @@ class LiveTraceNPlugin implements Plugin<Project> {
 
         project.extensions.create("traceTime", TraceTimeExtension)
         def android = project.extensions.getByType(AppExtension)
-        android.registerTransform(new TraceTransform(project))
+
+        println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+//        android.registerTransform(new TraceTransform(project))
+        android.registerTransform(new TraceCTransform("TraceTimePlugin"))
     }
 }

@@ -25,7 +25,6 @@ import java.util.regex.Pattern
  */
 class TraceTimeMethodVisitorAdapter2(
     private val paramNames: List<String>,
-    private val classNode: ClassNode?,
     private val methodVisitor: MethodVisitor?,
     private val accessMethod: Int,
     var nameMethod: String? = null,
@@ -66,6 +65,7 @@ class TraceTimeMethodVisitorAdapter2(
 
 
     override fun onMethodEnter() {
+        println("$fullClassName---$nameMethod---------onMethodEnter")
         //增加try catch
         visitTryCatchBlock(from, to, target, "java/lang/Exception")
         visitLabel(from)

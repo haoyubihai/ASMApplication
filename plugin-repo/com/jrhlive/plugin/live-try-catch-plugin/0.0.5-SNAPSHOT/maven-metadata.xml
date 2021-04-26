@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.jrhlive.plugin</groupId>
+  <artifactId>live-try-catch-plugin</artifactId>
+  <version>0.0.5-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20210422.080148</timestamp>
+      <buildNumber>4</buildNumber>
+    </snapshot>
+    <lastUpdated>20210422080148</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.0.5-20210422.080148-4</value>
+        <updated>20210422080148</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.5-20210422.080148-4</value>
+        <updated>20210422080148</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

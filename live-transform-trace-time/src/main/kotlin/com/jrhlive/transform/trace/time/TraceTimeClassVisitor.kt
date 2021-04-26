@@ -21,15 +21,12 @@ import java.util.logging.Logger
  ***************************************
  */
 
-class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?,private val classNode: ClassNode?,private val parameterNames: Map<String ,List<String>>) :ClassVisitor(ASM7,classVisitor),
+class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?=null,private val parameterNames: Map<String ,List<String>>?=null) :ClassVisitor(ASM8,classVisitor),
     Opcodes {
     private var mClassName: String? = null
     private var mFullClassName:String?=null
     private var mSimpleClassName:String?=null
 
-    init {
-
-    }
     /**
      * Visits a method of the class. This method *must* return a new [MethodVisitor]
      * instance (or null) each time it is called, i.e., it should not return a previously
@@ -58,7 +55,7 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?,private val c
 //            methodVisitor = TraceTimeMethodVisitor(methodVisitor)
             val paramKey = "$name,$descriptor"
 
-            methodVisitor = TraceTimeMethodVisitorAdapter2(parameterNames[paramKey]?: emptyList(),classNode,methodVisitor,access,name,descriptor,signature,name?:"",mFullClassName?:"",mSimpleClassName?:"")
+            methodVisitor = TraceTimeMethodVisitorAdapter2(parameterNames?.get(paramKey)?: emptyList(),methodVisitor,access,name,descriptor,signature,name?:"",mFullClassName?:"",mSimpleClassName?:"")
 
         }
         return methodVisitor

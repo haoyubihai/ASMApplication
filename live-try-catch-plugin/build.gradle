@@ -1,0 +1,39 @@
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply from:'../dependencies.gradle'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation gradleApi()
+    api asm.api
+    api asm.analysis
+    api asm.commons
+    api asm.tree
+    api asm.util
+    compileOnly project_plugin.gradle_plugin
+    compileOnly gradleApi()
+    implementation 'com.android.tools.build:gradle:3.6.3'
+    implementation 'com.android.tools.build:gradle-api:3.6.3'
+}
+
+
+
+//group='com.jrhlive.plugin'
+//version = "$live_trace_time_version"
+//
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            //发布本地的Maven地址设置
+//            repository(url: uri('../plugin-repo'))
+//        }
+//    }
+//}
+//
+//task asmTest(type:Exec,group:"asm"){
+//    workingDir '../'
+//    commandLine './asm.sh'
+//}
+//
+//asmTest.dependsOn(uploadArchives)
