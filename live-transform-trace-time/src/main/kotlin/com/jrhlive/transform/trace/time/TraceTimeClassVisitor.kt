@@ -51,7 +51,9 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?=null,private 
     ): org.objectweb.asm.MethodVisitor ?{
         var methodVisitor: MethodVisitor? = super.visitMethod(access, name, descriptor, signature,exceptions)
         //Base类中有两个方法：无参构造以及process方法，这里不增强构造方法
-        if (name!="<init>"&& name?.startsWith("_$") != true && methodVisitor != null) {
+
+
+        if (name!="<init>"&& name?.startsWith("_$") != true && methodVisitor != null&&filterClass()) {
 //            methodVisitor = TraceTimeMethodVisitor(methodVisitor)
             val paramKey = "$name,$descriptor"
 
@@ -61,6 +63,15 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?=null,private 
         return methodVisitor
     }
 
+
+    fun filterClass():Boolean{
+//        println("------------------mFullClassName===$mFullClassName")
+//        return  when{
+//            mFullClassName?.startsWith("android")==true ->false
+//            else -> true
+//        }
+        return true
+    }
     /**
      * Visits the header of the class.
      *

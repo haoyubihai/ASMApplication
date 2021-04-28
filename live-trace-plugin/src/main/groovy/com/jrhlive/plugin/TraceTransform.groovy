@@ -8,8 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Project
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.Opcodes
-import org.objectweb.asm.util.CheckClassAdapter
+
 
 class TraceTransform extends Transform{
     Project project

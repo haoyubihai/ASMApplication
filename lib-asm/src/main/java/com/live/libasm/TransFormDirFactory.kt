@@ -5,6 +5,7 @@ import com.android.build.api.transform.Format
 import com.android.build.api.transform.Status
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.utils.FileUtils
+import com.live.libasm.util.AnallyUtil
 import com.live.libasm.util.LogUtil
 import com.live.libasm.util.AsmUtils
 import java.io.File
@@ -69,9 +70,13 @@ class TransFormDirFactory(private val transformClass: ITransform):BaseTransformF
                     val sourceBytes = AsmUtils.readBytes(fileInputStream)
                     var modifyBytes: ByteArray? = null
                     val fileName = file.name
+
+
+
                     if (fileName.endsWith(".class")&&!fileName.startsWith("R\$")
                         && fileName != "BuildConfig.class"&&fileName!="R.class") {
-                        modifyBytes = modifyClass(sourceBytes!!)
+                        AnallyUtil.appendFile("\n\n\n^^^^^^^^^^^^handleDirectory----fileName==$fileName-----------\n\n\n")
+                        modifyBytes = transformClass.modifyClass(sourceBytes!!)
                     }
                     if (modifyBytes != null) {
                         val destPath = destFile.absolutePath

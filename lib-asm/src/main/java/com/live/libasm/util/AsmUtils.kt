@@ -194,4 +194,16 @@ object AsmUtils {
         return ""
     }
 
+    fun getClassFileName(filePath:String):String{
+        try {
+            if (filePath.isNotEmpty()){
+                return filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf("."))
+            }
+        }catch (e:Exception){
+
+        }
+
+        return  ""
+    }
+
 }

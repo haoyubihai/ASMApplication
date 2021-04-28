@@ -5,8 +5,17 @@ import com.android.build.api.transform.JarInput
 import com.android.build.api.transform.Status
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.utils.FileUtils
+import com.live.libasm.util.AnallyUtil
+import com.live.libasm.util.AsmUtils
+import com.live.libasm.util.HandJarUtils
 import com.live.libasm.util.LogUtil
+import org.apache.commons.codec.digest.DigestUtils
+import org.apache.commons.io.IOUtils
 import java.io.File
+import java.io.FileOutputStream
+import java.util.jar.JarFile
+import java.util.jar.JarOutputStream
+import java.util.zip.ZipEntry
 
 class TransFormJarFileFactory(private val transformClass: ITransform) : BaseTransformFactory(transformClass),
     ITransformJars {
@@ -47,36 +56,42 @@ class TransFormJarFileFactory(private val transformClass: ITransform) : BaseTran
             return
         }
 
-        FileUtils.copyFile(jarInput.file, destFile)
+//        FileUtils.copyFile(jarInput.file,destFile)
+
+        LogUtil.error("begin-----------------transJars---${jarInput.file.name}")
 //        // 构建 JarFile 文件
-//        val modifyJar = JarFile(jarInput.file, false)
+        val modifyJar = JarFile(jarInput.file, false)
+
+        AnallyUtil.appendFile("\n\n\n**********----------handjarfile=====${jarInput.file.name}************\n\n\n")
 //        // 创建目标文件流
-//        val jarOutputStream = JarOutputStream(FileOutputStream(destFile))
-//        val enumerations = modifyJar.entries()
-//        // 遍历 Jar 文件进行处理
-//        for (jarEntry in enumerations) {
-//            val inputStream = modifyJar.getInputStream(jarEntry)
-//            val entryName = jarEntry.name
-//            if (entryName.startsWith(".DSA") || entryName.endsWith(".SF")) {
-//                return
-//            }
-//            val tempEntry = JarEntry(entryName)
-//            jarOutputStream.putNextEntry(tempEntry)
-//            var modifyClassBytes: ByteArray? = null
-//            val destClassBytes = IOUtils.readBytes(inputStream)
-//            if (!jarEntry.isDirectory && entryName.endsWith(".class") && !entryName.startsWith("android")) {
-//                modifyClassBytes = destClassBytes?.let { modifyClass(it) }
-//            }
-//
-//            if (modifyClassBytes != null) {
-//                jarOutputStream.write(modifyClassBytes)
-//            } else {
-//                jarOutputStream.write(destClassBytes!!)
-//            }
-//            jarOutputStream.flush()
-//            jarOutputStream.closeEntry()
-//        }
-//        jarOutputStream.close()
-//        modifyJar.close()
+        val jarOutputStream = JarOutputStream(FileOutputStream(destFile))
+
+        val enumeration = modifyJar.entries()
+
+        while (enumeration.hasMoreElements()) {
+            val jarEntry = enumeration.nextElement()
+            val inputStream = modifyJar.getInputStream(jarEntry)
+            val entryName = jarEntry.name
+            val zipEntry = ZipEntry(entryName)
+            jarOutputStream.putNextEntry(zipEntry)
+            var modifyClassBytes: ByteArray? = null
+            val sourceClassBytes = IOUtils.toByteArray(inputStream)
+            var className = AsmUtils.getClassFileName(entryName)
+
+            if (HandJarUtils.isHandJarFileName(entryName)&&entryName.endsWith(".class")&&HandJarUtils.isHandJarClassName(className)) {
+                AnallyUtil.appendFile("$$$$$$$$$$$$$$$$---实际处理的文件 className = $className\n\n")
+                modifyClassBytes = transformClass.modifyClass(sourceClassBytes)
+
+            }
+            if (modifyClassBytes == null) {
+                jarOutputStream.write(sourceClassBytes)
+            } else {
+                jarOutputStream.write(modifyClassBytes)
+            }
+            jarOutputStream.closeEntry()
+        }
+        jarOutputStream.close()
+        modifyJar.close()
+        LogUtil.error("end-----------------transJars-----${jarInput.file.name}")
     }
 }

@@ -4,6 +4,7 @@ import com.android.build.api.transform.QualifiedContent
 import com.android.build.api.transform.Transform
 import com.android.build.api.transform.TransformInvocation
 import com.android.build.gradle.internal.pipeline.TransformManager
+import com.live.libasm.util.AnallyUtil
 import org.objectweb.asm.ClassVisitor
 
 abstract class AbsTransform(private val pluginName:String) : Transform() {
@@ -42,6 +43,7 @@ abstract class AbsTransform(private val pluginName:String) : Transform() {
     }
 
     fun beforeTransform() {
+        AnallyUtil.reset()
     }
 
      open fun internalTransform(transformInvocation: TransformInvocation?) {
