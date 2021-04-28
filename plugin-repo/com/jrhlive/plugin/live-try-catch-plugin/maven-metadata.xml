@@ -4,8 +4,8 @@
   <artifactId>live-try-catch-plugin</artifactId>
   <versioning>
     <versions>
-      <version>0.0.5-SNAPSHOT</version>
+      <version>0.0.1-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20210422080148</lastUpdated>
+    <lastUpdated>20210428072439</lastUpdated>
   </versioning>
 </metadata>

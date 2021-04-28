@@ -78,12 +78,13 @@ class TransFormDirFactory(private val transformClass: ITransform):
 
                     if (fileName.endsWith(".class")&&!fileName.startsWith("R\$")
                         && fileName != "BuildConfig.class"&&fileName!="R.class") {
-                        AnallyUtil.appendFile("\n\n\n^^^^^^^^^^^^handleDirectory----fileName==$fileName-----------\n\n\n")
                         modifyBytes = transformClass.modifyClass(sourceBytes!!)
                     }
                     if (modifyBytes != null) {
                         val destPath = destFile.absolutePath
                         destFile.delete()
+                        AnallyUtil.appendFile("\n\n\n^^^^^^^^^^^^handleDirectory----fileName==$fileName-----------destPath=$destPath\n\n\n")
+
                         AsmUtils.byte2File(destPath, modifyBytes)
                     }
                 }

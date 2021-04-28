@@ -5,31 +5,25 @@ apply from:'../dependencies.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation gradleApi()
-    api asm.api
-    api asm.analysis
-    api asm.commons
-    api asm.tree
-    api asm.util
-    compileOnly project_plugin.gradle_plugin
-    compileOnly gradleApi()
-    implementation 'com.android.tools.build:gradle:3.6.3'
-    implementation 'com.android.tools.build:gradle-api:3.6.3'
+    implementation project(path: ':lib-asm')
 }
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+group='com.jrhlive.plugin'
+version = "$trycatch_plugin_version"
 
 
-//group='com.jrhlive.plugin'
-//version = "$live_trace_time_version"
-//
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            //发布本地的Maven地址设置
-//            repository(url: uri('../plugin-repo'))
-//        }
-//    }
-//}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //发布本地的Maven地址设置
+            println("##################开始构建本地lib-try-catch-plugin")
+            repository(url: uri('../plugin-repo'))
+        }
+    }
+}
 //
 //task asmTest(type:Exec,group:"asm"){
 //    workingDir '../'

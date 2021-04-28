@@ -55,6 +55,7 @@ dependencies {
 
 //if (isTraceTimePluginEnabled.toBoolean()){
     apply plugin: 'live.trace.plugin'
+    apply plugin: 'live.trycatch.plugin'
 //}
 
 task asmTestBuildInstall(type:Exec,group:"asm"){

@@ -54,7 +54,6 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?=null,private 
 
 
         if (name!="<init>"&& name?.startsWith("_$") != true && methodVisitor != null&&filterClass()) {
-//            methodVisitor = TraceTimeMethodVisitor(methodVisitor)
             val paramKey = "$name,$descriptor"
 
             methodVisitor = TraceTimeMethodVisitorAdapter2(parameterNames?.get(paramKey)?: emptyList(),methodVisitor,access,name,descriptor,signature,name?:"",mFullClassName?:"",mSimpleClassName?:"")

@@ -6,8 +6,9 @@ def kotlin_version = "1.4.20"
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    compileOnly "com.android.tools.build:gradle:$gradle_version"
+    api "com.android.tools.build:gradle:$gradle_version"
     api gradleApi()
+    api localGroovy()
     api "org.ow2.asm:asm:$asm_version"
     api "org.ow2.asm:asm-commons:$asm_version"
     api "org.ow2.asm:asm-analysis:$asm_version"
