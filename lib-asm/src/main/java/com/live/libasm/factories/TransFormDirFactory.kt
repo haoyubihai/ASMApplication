@@ -1,17 +1,20 @@
-package com.live.libasm
+package com.live.libasm.factories
 
 import com.android.build.api.transform.DirectoryInput
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.Status
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.utils.FileUtils
+import com.live.libasm.ITransform
+import com.live.libasm.ITransformDirs
 import com.live.libasm.util.AnallyUtil
 import com.live.libasm.util.LogUtil
 import com.live.libasm.util.AsmUtils
 import java.io.File
 import java.io.FileInputStream
 
-class TransFormDirFactory(private val transformClass: ITransform):BaseTransformFactory(transformClass),ITransformDirs {
+class TransFormDirFactory(private val transformClass: ITransform):
+    BaseTransformFactory(transformClass), ITransformDirs {
     override fun transformDirectory(
         directoryInput: DirectoryInput,
         outputProvider: TransformOutputProvider,

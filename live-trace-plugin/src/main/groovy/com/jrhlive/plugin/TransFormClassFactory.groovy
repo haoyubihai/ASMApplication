@@ -1,7 +1,7 @@
 package com.jrhlive.plugin
 
 import com.jrhlive.transform.trace.time.TraceTimeClassVisitor
-import com.live.libasm.AbsTransFormClassFactory
+import com.live.libasm.factories.AbsTransFormClassFactory
 import org.jetbrains.annotations.NotNull
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter

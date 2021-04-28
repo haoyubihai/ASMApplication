@@ -1,11 +1,12 @@
-package com.live.libasm
+package com.live.libasm.factories
 
+import com.live.libasm.ITransform
 import com.live.libasm.util.LogUtil
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 
 
-abstract class AbsTransFormClassFactory:ITransform{
+abstract class AbsTransFormClassFactory: ITransform {
     override fun modifyClass(sourceBytes: ByteArray): ByteArray? {
         try {
             val classReader = ClassReader(sourceBytes)

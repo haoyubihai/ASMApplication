@@ -16,5 +16,4 @@ class TraceCTransform extends  AbsTransform {
     ITransform createDefaultTransformClass() {
         return new TransFormClassFactory()
     }
-
 }

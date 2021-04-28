@@ -1,15 +1,15 @@
-package com.live.libasm
+package com.live.libasm.factories
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.JarInput
 import com.android.build.api.transform.Status
 import com.android.build.api.transform.TransformOutputProvider
-import com.android.utils.FileUtils
+import com.live.libasm.ITransform
+import com.live.libasm.ITransformJars
 import com.live.libasm.util.AnallyUtil
 import com.live.libasm.util.AsmUtils
 import com.live.libasm.util.HandJarUtils
 import com.live.libasm.util.LogUtil
-import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.IOUtils
 import java.io.File
 import java.io.FileOutputStream
@@ -23,7 +23,6 @@ class TransFormJarFileFactory(private val transformClass: ITransform) : BaseTran
         val jarName = jarInput.name
         val status = jarInput.status
         val destFile = outputProvider.getContentLocation(jarName, jarInput.contentTypes, jarInput.scopes, Format.JAR)
-        LogUtil.info("TransformHelper[transformJars], jar = $jarName, status = $status, isIncremental = $isIncremental")
         if (isIncremental) {
             when (status) {
                 Status.ADDED -> {
@@ -56,13 +55,9 @@ class TransFormJarFileFactory(private val transformClass: ITransform) : BaseTran
             return
         }
 
-//        FileUtils.copyFile(jarInput.file,destFile)
-
         LogUtil.error("begin-----------------transJars---${jarInput.file.name}")
 //        // 构建 JarFile 文件
         val modifyJar = JarFile(jarInput.file, false)
-
-        AnallyUtil.appendFile("\n\n\n**********----------handjarfile=====${jarInput.file.name}************\n\n\n")
 //        // 创建目标文件流
         val jarOutputStream = JarOutputStream(FileOutputStream(destFile))
 
@@ -76,12 +71,10 @@ class TransFormJarFileFactory(private val transformClass: ITransform) : BaseTran
             jarOutputStream.putNextEntry(zipEntry)
             var modifyClassBytes: ByteArray? = null
             val sourceClassBytes = IOUtils.toByteArray(inputStream)
-            var className = AsmUtils.getClassFileName(entryName)
+            val className = AsmUtils.getClassFileName(entryName)
 
             if (HandJarUtils.isHandJarFileName(entryName)&&entryName.endsWith(".class")&&HandJarUtils.isHandJarClassName(className)) {
-                AnallyUtil.appendFile("$$$$$$$$$$$$$$$$---实际处理的文件 className = $className\n\n")
                 modifyClassBytes = transformClass.modifyClass(sourceClassBytes)
-
             }
             if (modifyClassBytes == null) {
                 jarOutputStream.write(sourceClassBytes)

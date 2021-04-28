@@ -1,6 +1,5 @@
-package com.live.libasm.simple
+package com.live.libasm.factories
 
-import com.live.libasm.BaseTransformFactory
 import com.live.libasm.ITransform
 import com.live.libasm.ITransformJars
 
@@ -13,7 +12,9 @@ import com.android.utils.FileUtils
 import com.live.libasm.util.LogUtil
 import java.io.File
 
-
+/**
+ * 不对jar包处理
+ */
 class SimpleTransformJarfileFactory(private val transformClass: ITransform) : BaseTransformFactory(transformClass),
     ITransformJars {
     override fun transformJars(jarInput: JarInput, outputProvider: TransformOutputProvider, isIncremental: Boolean) {
