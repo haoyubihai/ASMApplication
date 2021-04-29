@@ -55,16 +55,19 @@ dependencies {
 
 //if (isTraceTimePluginEnabled.toBoolean()){
 apply plugin: 'live.trace.plugin'
-//    apply plugin: 'live.trycatch.plugin'
+    apply plugin: 'live.trycatch.plugin'
 //}
 
 traceExt {
     packagePrefixs = "com.jrhlive,"
     simpleClassNames = "*"
     dealType = "all"
-
 }
-//tryCatchExt {}
+
+tryCatchExt{
+    packagePrefixs = "com.jrhlive,"
+    simpleClassNames = "Son,LibAsmClass"
+}
 
 task asmTestBuildInstall(type: Exec, group: "asm") {
     workingDir '../'
