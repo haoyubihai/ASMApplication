@@ -7,12 +7,13 @@ import com.android.build.gradle.internal.pipeline.TransformManager
 import com.live.libasm.factories.TransFormDirFactory
 import com.live.libasm.factories.TransFormFactory
 import com.live.libasm.factories.TransFormJarFileFactory
+import com.live.libasm.interceptor.Intercept
 import com.live.libasm.util.AnallyUtil
 
 /**
  * transform 基类，自定义的transform 继承该类
  */
-abstract class AbsTransform(private val pluginName:String) : Transform() {
+abstract class AbsTransform(private val pluginName:String, val intercept: Intercept?) : Transform() {
 
     private  val transFromClass by lazy { createDefaultTransformClass() }
     private val transformFactory by  lazy {

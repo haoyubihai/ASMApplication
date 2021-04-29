@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.jrhlive</groupId>
+  <artifactId>live-transform-trace-time</artifactId>
+  <version>0.0.7-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20210429.082636</timestamp>
+      <buildNumber>14</buildNumber>
+    </snapshot>
+    <lastUpdated>20210429082636</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.0.7-20210429.082636-14</value>
+        <updated>20210429082636</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.7-20210429.082636-14</value>
+        <updated>20210429082636</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

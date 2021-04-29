@@ -206,4 +206,9 @@ object AsmUtils {
         return  ""
     }
 
+
+    fun changeClassFileName(fileName:String):String{
+        return fileName.replace("/",".")
+    }
+
 }

@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 //定义 Gradle 插件中 properties 的文件名
 //apply plugin: 'com.jrhlive.plugin'
 //apply plugin: 'com.didiglobal.booster'
-apply from:'../dependencies.gradle'
+apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion 29
@@ -27,7 +27,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug{}
+        debug {}
     }
     compileOptions {
         sourceCompatibility 1.8
@@ -54,18 +54,31 @@ dependencies {
 }
 
 //if (isTraceTimePluginEnabled.toBoolean()){
-    apply plugin: 'live.trace.plugin'
-    apply plugin: 'live.trycatch.plugin'
+apply plugin: 'live.trace.plugin'
+//    apply plugin: 'live.trycatch.plugin'
 //}
 
-task asmTestBuildInstall(type:Exec,group:"asm"){
+traceExt {
+    packagePrefixs = "com.jrhlive,"
+    simpleClassNames = "*"
+    dealType = "all"
+
+}
+//tryCatchExt {}
+
+task asmTestBuildInstall(type: Exec, group: "asm") {
     workingDir '../'
     commandLine './asm-test-build-install.sh'
 }
 
-task asmTestBuild(type:Exec,group:"asm"){
+task asmTestBuild(type: Exec, group: "asm") {
     workingDir '../'
     commandLine './asm-test-build.sh'
+}
+
+task asmCleanInstall(type: Exec, group: "asm") {
+    workingDir '../'
+    commandLine './asm-clean-install.sh'
 }
 
 //apply plugin: 'live.trace.user'

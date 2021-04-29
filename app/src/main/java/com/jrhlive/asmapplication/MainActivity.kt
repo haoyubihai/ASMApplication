@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
 //        val a =9/0
 
+
     }
 
     @TestMethodAnnotation(desc = "doActionAnnotation")
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun doMerge(num:Int,name:String){
+
+        Son().pers(num,name)
     }
 }
 

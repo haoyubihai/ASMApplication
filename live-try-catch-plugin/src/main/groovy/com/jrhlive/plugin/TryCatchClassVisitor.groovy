@@ -3,6 +3,7 @@ package com.jrhlive.plugin
 import com.live.libasm.visitors.AbsClassVisitor
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
+import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
@@ -27,4 +28,8 @@ class TryCatchClassVisitor extends AbsClassVisitor {
         return methodVisitor
     }
 
+    @Override
+    AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+        return super.visitAnnotation(descriptor, visible)
+    }
 }

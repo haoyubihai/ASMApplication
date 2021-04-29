@@ -31,4 +31,8 @@ class Son:Person{
     init {
         println("son--init")
     }
+
+    fun pers(age:Int,name:String){
+
+    }
 }

@@ -4,7 +4,7 @@ buildscript {
     apply from: 'dependencies.gradle'
     ext {
         kotlin_version = '1.4.20'
-        live_trace_time_version='0.0.6-SNAPSHOT'
+        live_trace_time_version='0.0.7-SNAPSHOT'
         trycatch_plugin_version = "0.0.1-SNAPSHOT"
     }
     repositories {
@@ -29,7 +29,7 @@ buildscript {
 //        classpath project_plugin.booster_plugin
         classpath project_plugin.buildprops_gradle_plugin
         classpath "com.jrhlive.plugin:live-trace-plugin:$live_trace_time_version"
-        classpath "com.jrhlive.plugin:live-try-catch-plugin:$trycatch_plugin_version"
+//        classpath "com.jrhlive.plugin:live-try-catch-plugin:$trycatch_plugin_version"
         classpath 'com.android.tools:r8:2.2.60'
 
     }

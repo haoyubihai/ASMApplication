@@ -10,6 +10,7 @@ import com.live.libasm.ITransformDirs
 import com.live.libasm.util.AnallyUtil
 import com.live.libasm.util.LogUtil
 import com.live.libasm.util.AsmUtils
+import com.live.libasm.util.HandClassUtils
 import java.io.File
 import java.io.FileInputStream
 
@@ -73,17 +74,15 @@ class TransFormDirFactory(private val transformClass: ITransform):
                     val sourceBytes = AsmUtils.readBytes(fileInputStream)
                     var modifyBytes: ByteArray? = null
                     val fileName = file.name
+                    AnallyUtil.appendFile("fileName-----$fileName")
 
-
-
-                    if (fileName.endsWith(".class")&&!fileName.startsWith("R\$")
-                        && fileName != "BuildConfig.class"&&fileName!="R.class") {
+                    if (HandClassUtils.isHandDirClassFile(sourceFile.absolutePath,fileName,transformClass.interceptor())) {
                         modifyBytes = transformClass.modifyClass(sourceBytes!!)
                     }
                     if (modifyBytes != null) {
                         val destPath = destFile.absolutePath
                         destFile.delete()
-                        AnallyUtil.appendFile("\n\n\n^^^^^^^^^^^^handleDirectory----fileName==$fileName-----------destPath=$destPath\n\n\n")
+                        AnallyUtil.appendFile("\n\n\n^^^^^^^^^^^^handleDirectory---sourceFile=$sourceFile-fileName==$fileName------interceptor=-${transformClass.interceptor()?.packagePrefixs}")
 
                         AsmUtils.byte2File(destPath, modifyBytes)
                     }

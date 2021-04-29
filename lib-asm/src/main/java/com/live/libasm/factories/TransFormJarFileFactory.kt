@@ -6,9 +6,8 @@ import com.android.build.api.transform.Status
 import com.android.build.api.transform.TransformOutputProvider
 import com.live.libasm.ITransform
 import com.live.libasm.ITransformJars
-import com.live.libasm.util.AnallyUtil
 import com.live.libasm.util.AsmUtils
-import com.live.libasm.util.HandJarUtils
+import com.live.libasm.util.HandClassUtils
 import com.live.libasm.util.LogUtil
 import org.apache.commons.io.IOUtils
 import java.io.File
@@ -73,7 +72,7 @@ class TransFormJarFileFactory(private val transformClass: ITransform) : BaseTran
             val sourceClassBytes = IOUtils.toByteArray(inputStream)
             val className = AsmUtils.getClassFileName(entryName)
 
-            if (HandJarUtils.isHandJarFileName(entryName)&&entryName.endsWith(".class")&&HandJarUtils.isHandJarClassName(className)) {
+            if (HandClassUtils.isHandClassFile(entryName,transformClass.interceptor())) {
                 modifyClassBytes = transformClass.modifyClass(sourceClassBytes)
             }
             if (modifyClassBytes == null) {
