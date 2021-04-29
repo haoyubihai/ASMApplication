@@ -52,23 +52,29 @@ dependencies {
 
 //    implementation project(path: ':live-library')
 }
-
-//if (isTraceTimePluginEnabled.toBoolean()){
+//打印方法的入参信息
 apply plugin: 'live.trace.plugin'
-    apply plugin: 'live.trycatch.plugin'
-//}
+
 
 traceExt {
+    //配置多包名 用","分割
     packagePrefixs = "com.jrhlive,"
+    //配置类名，不配或者配置 "*" 表示所有类
     simpleClassNames = "*"
+    //处理类型 "dir" "jar" "all" 是否区分jar包的class文件
     dealType = "all"
 
 }
+//对特定的方法添加try catch
+apply plugin: 'live.trycatch.plugin'
 
-tryCatchExt{
+tryCatchExt {
+    //配置多包名 用","分割
     packagePrefixs = "com.jrhlive,"
+    //配置类名，不配或者配置 "*" 表示所有类
     simpleClassNames = "Son,LibAsmClass"
-    simpleMethodNames ="testTryCatch,pers"
+    //对特地的方法添加try catch
+    simpleMethodNames = "testTryCatch,pers"
 }
 
 task asmTestBuildInstall(type: Exec, group: "asm") {
