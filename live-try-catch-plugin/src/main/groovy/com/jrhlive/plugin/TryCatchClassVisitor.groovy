@@ -1,5 +1,7 @@
 package com.jrhlive.plugin
 
+import com.live.libasm.interceptor.Intercept
+import com.live.libasm.util.HandClassUtils
 import com.live.libasm.visitors.AbsClassVisitor
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
@@ -12,17 +14,19 @@ class TryCatchClassVisitor extends AbsClassVisitor {
 
 
     private int mApi = Opcodes.ASM8
+    private Intercept intercept
 
 
-    TryCatchClassVisitor(int api, @NotNull ClassVisitor classVisitor) {
+    TryCatchClassVisitor(int api, @NotNull ClassVisitor classVisitor,Intercept intercept) {
         super(api, classVisitor)
         this.mApi = api
+        this.intercept = intercept
     }
 
     @Override
     MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         def methodVisitor = super.visitMethod(access, name, descriptor, signature, exceptions)
-        if (name!="<init>"&& !name.startsWith("_\$") && null != methodVisitor) {
+        if (HandClassUtils.INSTANCE.isHandMethod(name,intercept)) {
             methodVisitor = new TryCatchMethodVisitor(mApi,methodVisitor,access,name,descriptor)
         }
         return methodVisitor

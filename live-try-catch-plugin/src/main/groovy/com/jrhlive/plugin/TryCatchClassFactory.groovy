@@ -15,7 +15,7 @@ class TryCatchClassFactory extends AbsTransFormClassFactory{
 
     @Override
     void docClassReaderAccept(@NotNull byte[] sourceBytes, @NotNull ClassReader classReader, @NotNull ClassWriter classWriter) {
-        classReader.accept(new TryCatchClassVisitor(Opcodes.ASM8,classWriter),ClassReader.EXPAND_FRAMES)
+        classReader.accept(new TryCatchClassVisitor(Opcodes.ASM8,classWriter,intercept),ClassReader.EXPAND_FRAMES)
     }
 
     @Override

@@ -62,11 +62,13 @@ traceExt {
     packagePrefixs = "com.jrhlive,"
     simpleClassNames = "*"
     dealType = "all"
+
 }
 
 tryCatchExt{
     packagePrefixs = "com.jrhlive,"
     simpleClassNames = "Son,LibAsmClass"
+    simpleMethodNames ="testTryCatch,pers"
 }
 
 task asmTestBuildInstall(type: Exec, group: "asm") {
