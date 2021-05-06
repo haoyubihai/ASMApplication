@@ -1,7 +1,7 @@
 package com.jrhlive.plugin
 
 import com.android.build.gradle.AppExtension
-import com.live.libasm.interceptor.Intercept
+import com.jrhlive.libasm.interceptor.Intercept
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

@@ -1,8 +1,8 @@
 package com.jrhlive.plugin
 
-import com.live.libasm.interceptor.Intercept
-import com.live.libasm.util.HandClassUtils
-import com.live.libasm.visitors.AbsClassVisitor
+import com.jrhlive.libasm.interceptor.Intercept
+import com.jrhlive.libasm.util.HandClassUtils
+import com.jrhlive.libasm.visitors.AbsClassVisitor
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import org.objectweb.asm.AnnotationVisitor

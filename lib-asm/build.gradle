@@ -20,7 +20,7 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 group="com.jrhlive"
-version = "$live_trace_time_version"
+version = "0.0.1"
 //
 uploadArchives {
     repositories {

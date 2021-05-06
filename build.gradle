@@ -4,8 +4,8 @@ buildscript {
     apply from: 'dependencies.gradle'
     ext {
         kotlin_version = '1.4.20'
-        live_trace_time_version='0.0.7-SNAPSHOT'
-        trycatch_plugin_version = "0.0.1-SNAPSHOT"
+        live_trace_time_version='0.0.8-SNAPSHOT'
+        trycatch_plugin_version = "0.0.8-SNAPSHOT"
     }
     repositories {
 
