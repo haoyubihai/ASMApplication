@@ -7,11 +7,8 @@ import com.jrhlive.transform.trace.time.TraceTimeClassVisitor
 import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Project
 import org.objectweb.asm.ClassReader
-import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.Opcodes
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.util.CheckClassAdapter
+
 
 class TraceTransform extends Transform{
     Project project
@@ -93,16 +90,11 @@ class TraceTransform extends Transform{
     private void handleFile(File file){
         def cr=new ClassReader(file.bytes)
         def cw=new ClassWriter(cr,ClassWriter.COMPUTE_MAXS)
-        ClassNode classNode = new ClassNode()
         Map<String ,List<String>> paramsMap =  MethodParamNamesScaner.getParamNames(new FileInputStream(file))
-        def classVisitor=new TraceTimeClassVisitor(cw,classNode,paramsMap)
-        cr.accept(new CheckClassAdapter(Opcodes.ASM7, classNode, false) {}, ClassReader.EXPAND_FRAMES)
+        def classVisitor=new TraceTimeClassVisitor(cw,paramsMap)
+//        cr.accept(new CheckClassAdapter(Opcodes.ASM7, false) {}, ClassReader.EXPAND_FRAMES)
         cr.accept(classVisitor,ClassReader.EXPAND_FRAMES)
         def bytes=cw.toByteArray()
-
-
-
-
         //写回原来这个类所在的路径
         FileOutputStream fos=new FileOutputStream(file.getParentFile().getAbsolutePath()+File.separator+file.name)
         fos.write(bytes)

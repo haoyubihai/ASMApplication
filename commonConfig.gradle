@@ -42,6 +42,4 @@ dependencies {
     implementation kotlin.stdlib
     implementation kotlin.reflect
     api gson
-//    testimplementation "org.jetbrains.kotlin:kotlin-test:${versions.kotlin_version}"
-//    testimplementation "org.jetbrains.kotlin:kotlin-test-junit:${versions.kotlin_version}"
 }

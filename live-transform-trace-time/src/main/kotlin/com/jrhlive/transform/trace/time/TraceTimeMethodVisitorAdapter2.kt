@@ -25,7 +25,6 @@ import java.util.regex.Pattern
  */
 class TraceTimeMethodVisitorAdapter2(
     private val paramNames: List<String>,
-    private val classNode: ClassNode?,
     private val methodVisitor: MethodVisitor?,
     private val accessMethod: Int,
     var nameMethod: String? = null,
@@ -59,49 +58,50 @@ class TraceTimeMethodVisitorAdapter2(
     }
 
 
-
-    private val from = Label()
-    private val to = Label()
-    private val target = Label()
+//
+//    private val from = Label()
+//    private val to = Label()
+//    private val target = Label()
 
 
     override fun onMethodEnter() {
+        println("$fullClassName---$nameMethod---------onMethodEnter")
         //增加try catch
-        visitTryCatchBlock(from, to, target, "java/lang/Exception")
-        visitLabel(from)
+//        visitTryCatchBlock(from, to, target, "java/lang/Exception")
+//        visitLabel(from)
         probeMethodParameter()
         super.onMethodEnter()
     }
-
-    override fun visitMaxs(maxStack: Int, maxLocals: Int) {
-        //标志：try块结束
-        mv.visitLabel(to)
-//        mv.visitJumpInsn(Opcodes.GOTO, catchEnd)
-        //标志：catch块开始位置
-        mv.visitLabel(target)
-
-//        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, arrayOf("java/lang/Exception"))
 //
-        val local = newLocal(Type.getType("Ljava/lang/Exception;"))
-        mv.visitVarInsn(Opcodes.ASTORE, local)
-
-////         抛出异常
-        mv.visitVarInsn(Opcodes.ALOAD, local)
-
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Exception",
-            "printStackTrace", "()V", false);
-//        mv.visitInsn(Opcodes.ATHROW)
-//        mv.visitLabel(catchEnd)
-        //判断方法的返回类型
-        mv.visitInsn(getReturnCode(descriptor = desc))
-        super.visitMaxs(maxStack, maxLocals)
-
-    }
+//    override fun visitMaxs(maxStack: Int, maxLocals: Int) {
+//        //标志：try块结束
+//        mv.visitLabel(to)
+////        mv.visitJumpInsn(Opcodes.GOTO, catchEnd)
+//        //标志：catch块开始位置
+//        mv.visitLabel(target)
+//
+////        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, arrayOf("java/lang/Exception"))
+////
+//        val local = newLocal(Type.getType("Ljava/lang/Exception;"))
+//        mv.visitVarInsn(Opcodes.ASTORE, local)
+//
+//        mv.visitVarInsn(Opcodes.ALOAD, local)
+//
+//        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Exception",
+//            "printStackTrace", "()V", false);
+////        mv.visitInsn(Opcodes.ATHROW)
+////        mv.visitLabel(catchEnd)
+//        //判断方法的返回类型
+//        mv.visitInsn(getReturnCode(descriptor = desc))
+//        super.visitMaxs(maxStack, maxLocals)
+//
+//    }
 
     /**
      * 获取对应的返回值
      */
     private fun getReturnCode(descriptor: String?): Int {
+
         return when (descriptor!!.subSequence(descriptor.indexOf(")") + 1, descriptor.length)) {
             "V" -> Opcodes.RETURN
             "I", "Z", "B", "C", "S" -> {
@@ -268,7 +268,7 @@ class TraceTimeMethodVisitorAdapter2(
         }
 
         //append fullClassName  methodName :{
-        mv.visitLdcInsn("监控--class=${fullClassName}-----methodName=$nameMethod:{ ")
+        mv.visitLdcInsn("监控--class=【${fullClassName}】-----methodName=【$nameMethod】:{ ")
         mv.visitMethodInsn(
             INVOKEVIRTUAL,
             "java/lang/StringBuilder",

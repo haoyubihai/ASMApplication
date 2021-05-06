@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 //定义 Gradle 插件中 properties 的文件名
 //apply plugin: 'com.jrhlive.plugin'
 //apply plugin: 'com.didiglobal.booster'
-apply from:'../dependencies.gradle'
+apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion 29
@@ -27,7 +27,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug{}
+        debug {}
     }
     compileOptions {
         sourceCompatibility 1.8
@@ -38,6 +38,7 @@ android {
 
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation kotlin.stdlib
     implementation kotlin.reflect
@@ -51,19 +52,44 @@ dependencies {
 
 //    implementation project(path: ':live-library')
 }
+//打印方法的入参信息
+apply plugin: 'live.trace.plugin'
 
-//if (isTraceTimePluginEnabled.toBoolean()){
-    apply plugin: 'live.trace.plugin'
-//}
 
-task asmTestBuildInstall(type:Exec,group:"asm"){
+traceExt {
+    //配置多包名 用","分割
+    packagePrefixs = "com.jrhlive,"
+    //配置类名，不配或者配置 "*" 表示所有类
+    simpleClassNames = "*"
+    //处理类型 "dir" "jar" "all" 是否区分jar包的class文件
+    dealType = "all"
+
+}
+//对特定的方法添加try catch
+apply plugin: 'live.trycatch.plugin'
+
+tryCatchExt {
+    //配置多包名 用","分割
+    packagePrefixs = "com.jrhlive,"
+    //配置类名，不配或者配置 "*" 表示所有类
+    simpleClassNames = "Son,LibAsmClass"
+    //对特地的方法添加try catch
+    simpleMethodNames = "testTryCatch,pers"
+}
+
+task asmTestBuildInstall(type: Exec, group: "asm") {
     workingDir '../'
     commandLine './asm-test-build-install.sh'
 }
 
-task asmTestBuild(type:Exec,group:"asm"){
+task asmTestBuild(type: Exec, group: "asm") {
     workingDir '../'
     commandLine './asm-test-build.sh'
+}
+
+task asmCleanInstall(type: Exec, group: "asm") {
+    workingDir '../'
+    commandLine './asm-clean-install.sh'
 }
 
 //apply plugin: 'live.trace.user'

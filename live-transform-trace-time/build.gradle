@@ -20,7 +20,7 @@ version = "$live_trace_time_version"
 uploadArchives {
     repositories {
         mavenDeployer {
-            println("##################开始构建本地jar")
+            println("##################开始构建本地lib-transform-trace-time-jar")
             repository(url: uri('../local-repo')) //定义本地maven仓库的地址
         }
     }

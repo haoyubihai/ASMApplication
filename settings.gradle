@@ -3,5 +3,6 @@ rootProject.name='ASMApplication'
 include ':app'
 include ':live-transform-trace-time'
 include ':live-trace-plugin'
-
-
+include ':live-try-catch-plugin'
+include ':lib-asm'
+include ':lib-test-asm'

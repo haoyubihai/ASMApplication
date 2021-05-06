@@ -1,0 +1,33 @@
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply from:'../dependencies.gradle'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':lib-asm')
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+group='com.jrhlive.plugin'
+version = "$trycatch_plugin_version"
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //发布本地的Maven地址设置
+            println("##################开始构建本地lib-try-catch-plugin")
+            repository(url: uri('../plugin-repo'))
+        }
+    }
+}
+//
+//task asmTest(type:Exec,group:"asm"){
+//    workingDir '../'
+//    commandLine './asm.sh'
+//}
+//
+//asmTest.dependsOn(uploadArchives)

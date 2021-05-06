@@ -7,12 +7,9 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':live-transform-trace-time')
-    implementation gradleApi()
-    implementation localGroovy()
-//    implementation 'com.google.auto.service:auto-service:1.0-rc6'
-//    annotationProcessor  'com.google.auto.service:auto-service:1.0-rc6'
-    implementation 'com.android.tools.build:gradle:3.6.3'
-    implementation 'com.android.tools.build:gradle-api:3.6.3'
+    implementation project(path: ':lib-asm')
+
+
 }
 
 

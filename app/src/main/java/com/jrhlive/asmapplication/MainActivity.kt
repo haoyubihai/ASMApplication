@@ -3,6 +3,7 @@ package com.jrhlive.asmapplication
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jrhlive.LibAsmClass
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +15,8 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(Random.nextLong(2000))
         doMerge(3,"jack")
 
-        val a =9/0
+//        val a =9/0
+
 
     }
 
@@ -28,11 +30,14 @@ class MainActivity : AppCompatActivity() {
 
     fun doActionTips( name:String ,age :Int){
 
-        val point:PointF?= null
-        print(point!!.x)
+//        val point:PointF?= null
+//        print(point!!.x)
+        LibAsmClass.helloAsm(name)
     }
 
     fun doMerge(num:Int,name:String){
+
+        Son().pers(num,name)
     }
 }
 

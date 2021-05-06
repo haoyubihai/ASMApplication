@@ -31,4 +31,10 @@ class Son:Person{
     init {
         println("son--init")
     }
+
+    fun pers(age:Int,name:String){
+
+        val a = 1/0
+        print(a)
+    }
 }
