@@ -11,9 +11,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/lib-asm" />
+            <option value="$PROJECT_DIR$/lib-test-asm" />
             <option value="$PROJECT_DIR$/live-library" />
             <option value="$PROJECT_DIR$/live-trace-plugin" />
             <option value="$PROJECT_DIR$/live-transform-trace-time" />
+            <option value="$PROJECT_DIR$/live-try-catch-plugin" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -3,9 +3,16 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply from:'../dependencies.gradle'
 
+ext {
+    PUBLISH_GROUP_ID = "io.github.haoyubihai"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'live-try-catch-plugin'			//项目名
+    PUBLISH_VERSION = '0.0.2'					//版本号
+}
+apply from: "${rootProject.projectDir}/live-try-catch-plugin/publish-mavencentral.gradle"
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':lib-asm')
+//    implementation project(path: ':lib-asm')
+    implementation 'io.github.haoyubihai:lib-asm:0.0.1'
 }
 
 sourceCompatibility = "1.8"

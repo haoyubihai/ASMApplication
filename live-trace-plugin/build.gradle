@@ -1,13 +1,21 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply from:'../commonConfig.gradle'
+
+ext {
+    PUBLISH_GROUP_ID = "io.github.haoyubihai"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'live-trace-plugin'			//项目名
+    PUBLISH_VERSION = '0.0.2'					//版本号
+}
+apply from: "${rootProject.projectDir}/live-trace-plugin/publish-mavencentral.gradle"
+
 repositories {
     mavenCentral()
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':live-transform-trace-time')
-    implementation project(path: ':lib-asm')
+    implementation 'io.github.haoyubihai:lib-asm:0.0.1'
 
 
 }
@@ -15,7 +23,7 @@ dependencies {
 
 
 group='com.jrhlive.plugin'
-version = "$live_trace_time_version"
+version = "$live_trace_version"
 
 uploadArchives {
     repositories {
