@@ -13,10 +13,12 @@
    classpath "io.github.haoyubihai:live-try-catch-plugin:$trycatch_plugin_version"
 
 2. module 的 build.gradle 引用plugin
+<br>
     
  ////打印方法的入参信息
  apply plugin: 'live.trace.plugin'
  
+ ```
  
  traceExt {
      //配置多包名 用","分割
@@ -28,7 +30,12 @@
  
  }
  
- 
+
+```
+
+<br>
+
+ ```
  //对特定的方法添加try catch
  apply plugin: 'live.trycatch.plugin'
  
@@ -40,3 +47,6 @@
      //对特地的方法添加try catch
      simpleMethodNames = "testTryCatch,pers"
  }
+
+```
+
