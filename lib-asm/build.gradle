@@ -1,0 +1,38 @@
+
+plugins{
+    id 'java-library'
+    id 'kotlin'
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+//apply plugin: 'maven'
+def asm_version = "8.0.1"
+def gradle_version = "4.1.0"
+def kotlin_version = "1.4.20"
+
+ext {
+    PUBLISH_GROUP_ID = "io.github.haoyubihai"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'lib-asm'			//项目名
+    PUBLISH_VERSION = '0.1.0-SNAPSHOT'	//版本号
+    PUBLISH_DESC ='Lib-asm quickly create plug-ins Realize bytecode processing function through asm'//描述
+}
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "com.android.tools.build:gradle:$gradle_version"
+    api gradleApi()
+    api localGroovy()
+    api "org.ow2.asm:asm:$asm_version"
+    api "org.ow2.asm:asm-commons:$asm_version"
+    api "org.ow2.asm:asm-analysis:$asm_version"
+    api "org.ow2.asm:asm-util:$asm_version"
+    api "org.ow2.asm:asm-tree:$asm_version"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+

@@ -41,7 +41,5 @@ targetCompatibility = "1.8"
 dependencies {
     implementation kotlin.stdlib
     implementation kotlin.reflect
-
-//    testimplementation "org.jetbrains.kotlin:kotlin-test:${versions.kotlin_version}"
-//    testimplementation "org.jetbrains.kotlin:kotlin-test-junit:${versions.kotlin_version}"
+    api gson
 }

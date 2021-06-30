@@ -1,37 +1,49 @@
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply from:'../commonConfig.gradle'
-repositories {
-    mavenCentral()
+
+plugins{
+    id 'java-library'
+    id 'groovy'
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
 }
+apply from:'../commonConfig.gradle'
+
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':live-transform-trace-time')
-    implementation gradleApi()
-    implementation localGroovy()
-//    implementation 'com.google.auto.service:auto-service:1.0-rc6'
-//    annotationProcessor  'com.google.auto.service:auto-service:1.0-rc6'
-    implementation 'com.android.tools.build:gradle:3.6.3'
-    implementation 'com.android.tools.build:gradle-api:3.6.3'
+//    implementation project(path: ':live-transform-trace-time')
+    implementation 'io.github.haoyubihai:lib-asm:0.1.0'
+    implementation 'io.github.haoyubihai:live-trace-method:0.1.0'
+    api gradleApi()
+    api localGroovy()
 }
 
-
-
-group='com.jrhlive.plugin'
-version = "$live_trace_time_version"
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            //发布本地的Maven地址设置
-            repository(url: uri('../plugin-repo'))
-        }
-    }
+ext {
+    PUBLISH_GROUP_ID = "io.github.haoyubihai"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'live-trace-plugin'			//项目名
+    PUBLISH_VERSION = '0.1.0'	//版本号
+    PUBLISH_DESC ='Print the parameter information of the related method of the specified class, the name and value of the input parameter'//描述
 }
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
 
-task asmTest(type:Exec,group:"asm"){
-    workingDir '../'
-    commandLine './asm.sh'
-}
 
-asmTest.dependsOn(uploadArchives)
+
+//group='com.jrhlive.plugin'
+//version = "$live_trace_time_version"
+//
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            //发布本地的Maven地址设置
+//            repository(url: uri('../plugin-repo'))
+//        }
+//    }
+//}
+//
+//task asmTest(type:Exec,group:"asm"){
+//    workingDir '../'
+//    commandLine './asm.sh'
+//}
+//
+//asmTest.dependsOn(uploadArchives)

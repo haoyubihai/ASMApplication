@@ -1,10 +1,14 @@
 package com.jrhlive.transform.trace.time
 
+import com.jrhlive.transform.trace.MethodParamNamesScaner
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Opcodes.*
+import org.objectweb.asm.tree.ClassNode
+import java.io.File
+import java.io.FileInputStream
 import java.util.logging.Logger
 
 /**
@@ -17,9 +21,12 @@ import java.util.logging.Logger
  ***************************************
  */
 
-class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisitor(ASM7,classVisitor),
+class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?=null,private val parameterNames: Map<String ,List<String>>?=null) :ClassVisitor(ASM8,classVisitor),
     Opcodes {
     private var mClassName: String? = null
+    private var mFullClassName:String?=null
+    private var mSimpleClassName:String?=null
+
     /**
      * Visits a method of the class. This method *must* return a new [MethodVisitor]
      * instance (or null) each time it is called, i.e., it should not return a previously
@@ -44,13 +51,26 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisito
     ): org.objectweb.asm.MethodVisitor ?{
         var methodVisitor: MethodVisitor? = super.visitMethod(access, name, descriptor, signature,exceptions)
         //Base类中有两个方法：无参构造以及process方法，这里不增强构造方法
-        if (name!="<init>"&& name?.startsWith("_$") != true && methodVisitor != null) {
-//            methodVisitor = TraceTimeMethodVisitor(methodVisitor)
-            methodVisitor = TraceTimeMethodVisitorAdapter(methodVisitor,access,name,descriptor)
+
+
+        if (name!="<init>"&& name?.startsWith("_$") != true && methodVisitor != null&&filterClass()) {
+            val paramKey = "$name,$descriptor"
+
+            methodVisitor = TraceTimeMethodVisitorAdapter2(parameterNames?.get(paramKey)?: emptyList(),methodVisitor,access,name,descriptor,signature,name?:"",mFullClassName?:"",mSimpleClassName?:"")
+
         }
         return methodVisitor
     }
 
+
+    fun filterClass():Boolean{
+//        println("------------------mFullClassName===$mFullClassName")
+//        return  when{
+//            mFullClassName?.startsWith("android")==true ->false
+//            else -> true
+//        }
+        return true
+    }
     /**
      * Visits the header of the class.
      *
@@ -77,6 +97,14 @@ class TraceTimeClassVisitor(private val classVisitor:ClassVisitor?) :ClassVisito
         super.visit(version, access, name, signature, superName, interfaces)
 
         mClassName = name
+
+        mFullClassName = mClassName?.let {
+            it.replace("/",".")
+        }
+
+        mSimpleClassName = mClassName?.let {
+            it.substring(it.lastIndexOf("/")+1)
+        }
 
     }
 

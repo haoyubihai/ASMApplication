@@ -1,0 +1,20 @@
+plugins{
+    id 'java-library'
+    id 'kotlin'
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+ext {
+    PUBLISH_GROUP_ID = "io.github.haoyubihai"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'lib-java-util'			//项目名
+    PUBLISH_VERSION = '0.0.4'					//版本号
+}
+apply from: "${rootProject.projectDir}/lib-java-util/publish-mavencentral.gradle"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

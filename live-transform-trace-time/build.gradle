@@ -1,5 +1,12 @@
+plugins{
+    id 'java-library'
+    id 'kotlin'
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+
 apply from:'../commonConfig.gradle'
-apply plugin: 'maven'
 dependencies {
 //    kapt "com.google.auto.service:auto-service:1.0-rc6"
     api asm.api
@@ -9,22 +16,32 @@ dependencies {
     api asm.util
     compileOnly project_plugin.gradle_plugin
     compileOnly gradleApi()
+    testApi gson
+
 }
 
+ext {
+    PUBLISH_GROUP_ID = "io.github.haoyubihai"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'live-trace-method'			//项目名
+    PUBLISH_VERSION = '0.1.0'	//版本号
+    PUBLISH_DESC ='Print the parameter information of the related method of the specified class, the name and value of the input parameter source'//描述
+}
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
 
-group="com.jrhlive"
-version = "$live_trace_time_version"
+
+//group="com.jrhlive"
+//version = "$live_trace_time_version"
+////
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            println("##################开始构建本地lib-transform-trace-time-jar")
+//            repository(url: uri('../local-repo')) //定义本地maven仓库的地址
+//        }
+//    }
+//}
 //
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            println("##################开始构建本地jar")
-            repository(url: uri('../local-repo')) //定义本地maven仓库的地址
-        }
-    }
-}
-
-
+//
 
 // asmTest.dependsOn(uploadArchives)
 
