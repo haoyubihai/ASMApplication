@@ -8,8 +8,9 @@
         live_trace_version='0.1.0'
         trycatch_plugin_version = "0.1.0"
     }
-    
+      <br>
    classpath "io.github.haoyubihai:live-trace-plugin:$live_trace_version"
+   <br>
    classpath "io.github.haoyubihai:live-try-catch-plugin:$trycatch_plugin_version"
 
 2. module 的 build.gradle 引用plugin
