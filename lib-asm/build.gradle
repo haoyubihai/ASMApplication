@@ -1,8 +1,24 @@
-apply plugin: 'kotlin'
-apply plugin: 'maven'
+
+plugins{
+    id 'java-library'
+    id 'kotlin'
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+//apply plugin: 'maven'
 def asm_version = "8.0.1"
-def gradle_version = "3.6.3"
+def gradle_version = "4.1.0"
 def kotlin_version = "1.4.20"
+
+ext {
+    PUBLISH_GROUP_ID = "io.github.haoyubihai"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'lib-asm'			//项目名
+    PUBLISH_VERSION = '0.1.0-SNAPSHOT'	//版本号
+    PUBLISH_DESC ='Lib-asm quickly create plug-ins Realize bytecode processing function through asm'//描述
+}
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -19,14 +35,4 @@ dependencies {
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-group="com.jrhlive"
-version = "0.0.1"
-//
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            println("##################开始构建本地jar")
-            repository(url: uri('../local-repo')) //定义本地maven仓库的地址
-        }
-    }
-}
+

@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
 
 //        val a =9/0
 
-
     }
 
     @TestMethodAnnotation(desc = "doActionAnnotation")

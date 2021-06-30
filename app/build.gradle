@@ -1,6 +1,8 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
 
 //apply plugin: 'kotlin-kapt'
 //定义 Gradle 插件中 properties 的文件名
@@ -46,25 +48,26 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation files('libs/io.github.haoyubihai-1.0.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 //    implementation project(path: ':live-library')
 }
-//打印方法的入参信息
-apply plugin: 'live.trace.plugin'
-
-
-traceExt {
-    //配置多包名 用","分割
-    packagePrefixs = "com.jrhlive,"
-    //配置类名，不配或者配置 "*" 表示所有类
-    simpleClassNames = "*"
-    //处理类型 "dir" "jar" "all" 是否区分jar包的class文件
-    dealType = "all"
-
-}
+//////打印方法的入参信息
+//apply plugin: 'live.trace.plugin'
+//
+//
+//traceExt {
+//    //配置多包名 用","分割
+//    packagePrefixs = "com.jrhlive,"
+//    //配置类名，不配或者配置 "*" 表示所有类
+//    simpleClassNames = "*"
+//    //处理类型 "dir" "jar" "all" 是否区分jar包的class文件
+//    dealType = "all"
+//
+//}
 //对特定的方法添加try catch
 apply plugin: 'live.trycatch.plugin'
 
